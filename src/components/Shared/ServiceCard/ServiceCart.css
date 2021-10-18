@@ -1,0 +1,16 @@
+.service-card {
+  display: flex;
+  flex-direction: column;
+}
+.service-card button {
+  display: inline-block;
+  text-transform: capitalize;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 100px;
+  transition: 0.3s;
+  color: #e12454;
+  background: #fff;
+  border: 1px solid #e12454;
+  font-weight: 400;
+}

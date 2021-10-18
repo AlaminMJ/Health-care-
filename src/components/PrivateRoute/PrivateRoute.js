@@ -1,24 +1,29 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import useAuth from "../Hooks/useAuth";
 
 function PrivateRoute({ children, ...rest }) {
-  let { user } = useAuth();
-  return (
-    <Route
-      {...rest}
-      render={({ location }) =>
-        user ? (
-          children
-        ) : (
-          <Redirect
-            to={{
-              pathname: "/login",
-              state: { from: location },
-            }}
-          />
-        )
-      }
-    />
-  );
+  let { user, isLoading } = useAuth();
+  if (isLoading) {
+    return <p>Loading</p>;
+  } else {
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+          user ? (
+            children
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+                state: { from: location },
+              }}
+            />
+          )
+        }
+      />
+    );
+  }
 }
 export default PrivateRoute;
