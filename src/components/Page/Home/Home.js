@@ -1,13 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ServiceCard from "../../Shared/ServiceCard/ServiceCard";
 import "./Home.css";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 const Home = () => {
+  const [services, setSerices] = useState([]);
+  useEffect(() => {
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((data) => setSerices(data));
+  }, []);
   return (
     <div>
       <div className="banner">
         <div className="container">
-          <div className="background-content">
+          <div
+            className="background-content"
+            data-aos="fade-up-right"
+            data-aos-offset="200"
+            data-aos-delay="50"
+            data-aos-duration="1000"
+            data-aos-easing="ease-in-out"
+          >
             <h5>MEDICAL CENTER</h5>
             <h2>
               Best <span className="text-primary">Medical & </span>
@@ -35,7 +50,14 @@ const Home = () => {
               />
             </div>
             <div className="col-md-6">
-              <div className="content">
+              <div
+                className="content "
+                data-aos="fade-up-left"
+                data-aos-offset="300"
+                data-aos-delay="50"
+                data-aos-duration="1000"
+                data-aos-easing="ease-in-out"
+              >
                 <h5 className="text-primary">About The HunLare</h5>
                 <h2>
                   We’re lanced most
@@ -84,7 +106,13 @@ const Home = () => {
       {/* Home About end*/}
       <div className="service py-5">
         <div className="container">
-          <div className="container text-center">
+          <div
+            className="container text-center"
+            data-aos="fade-left"
+            data-aos-delay="10"
+            data-aos-duration="500"
+            data-aos-easing="ease-in-out"
+          >
             <h5 className="text-primary ">Our Services</h5>
             <h2 className="mt-4">HounLare professional services</h2>
             <p className="w-75 mx-auto my-4 lead">
@@ -94,31 +122,31 @@ const Home = () => {
             </p>
           </div>
           <div className="services-row">
-            <ServiceCard></ServiceCard>
-            <ServiceCard></ServiceCard>
-            <ServiceCard></ServiceCard>
-            <ServiceCard></ServiceCard>
+            {services.map((service) => (
+              <ServiceCard
+                key={service.service_id}
+                data={service}
+              ></ServiceCard>
+            ))}
           </div>
         </div>
       </div>
       {/* Banner */}
-      <div className="row  img-banner">
-        <div className="content">
-          <h2 className="display-3 fw-bold">Enjoy a disease free life</h2>
-        </div>
-        <div>
-          <img
-            src="https://oilytheme.net/demo-html/2021/003/hounlare/assets/img/about/about-04.jpg"
-            alt="mother"
-            className="img-fluid"
-          />
-        </div>
-        <div>
-          <img
-            src="https://oilytheme.net/demo-html/2021/003/hounlare/assets/img/about/about-05.jpg"
-            alt="doctor"
-            className="img-fluid"
-          />
+      <div className="row  img-banner py-5">
+        <div
+          className="content mx-auto text-center "
+          data-aos="fade-right"
+          data-aos-offset="300"
+          data-aos-delay="10"
+          data-aos-duration="500"
+          data-aos-easing="ease-in-out"
+        >
+          <h5>Keep child, make life healthy</h5>
+          <h2 className="fs-1">Enjoy a disease free life</h2>
+
+          <button className="btn btn-primary px-5 mt-2 d-inline-block">
+            Take Teatment
+          </button>
         </div>
       </div>
     </div>

@@ -1,0 +1,21 @@
+.footer h4 {
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 500;
+  color: #ebebeb;
+  margin-bottom: 53px;
+}
+.footer ul li {
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-size: 15px;
+  color: #c8c8c8;
+  line-height: 1.8;
+  cursor: pointer;
+  /* display: inline-block; */
+}
+
+.footer .social_link {
+  margin: 0 10px;
+  cursor: pointer;
+}

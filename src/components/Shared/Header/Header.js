@@ -1,40 +1,49 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
+import logo from "../../images/logo-2.png";
 
 const Header = () => {
   const { user, logOut } = useAuth();
   return (
-    <Navbar collapseOnSelect expand="lg" fixed="top" variant="light" bg="light">
+    <Navbar collapseOnSelect expand="lg" fixed="top" bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Hospital</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          <img src={logo} alt="logo" style={{}} />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ms-auto">
-            <NavLink to="/home">
-              <Nav.Link>Home</Nav.Link>
-            </NavLink>
-            <Link to="/services">
-              <Nav.Link >Services</Nav.Link>
-            </Link>
-            <NavLink to="/about">
-              <Nav.Link>About</Nav.Link>
-            </NavLink>
-            <NavLink to="/contact">
-              <Nav.Link>Contact us</Nav.Link>
-            </NavLink>
+            <Nav.Link as={Link} to="/home">
+              Home
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/services">
+              Services
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/about">
+              About
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/contact">
+              Contact us
+            </Nav.Link>
+            {user ? (
+              <>
+                <p className="text-white mt-2 me-2">{user.displayName}</p>
+                <button className="btn btn-sm btn-primary" onClick={logOut}>
+                  Log out
+                </button>
+              </>
+            ) : (
+              <Link to="/login">
+                <button className="btn  btn-primary btn-sm">Log In</button>
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
-        {user ? (
-          <button className="btn btn-sm btn-primary" onClick={logOut}>
-            Log Out
-          </button>
-        ) : (
-          <Link to="/login">
-            <button className="btn btn-sm btn-primary">Log In</button>
-          </Link>
-        )}
       </Container>
     </Navbar>
   );

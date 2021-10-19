@@ -5,7 +5,13 @@ import useAuth from "../Hooks/useAuth";
 function PrivateRoute({ children, ...rest }) {
   let { user, isLoading } = useAuth();
   if (isLoading) {
-    return <p>Loading</p>;
+    return (
+      <>
+        <div className="d-flex justify-content-center p-5">
+          <h5 className="mx-auto mt-5 d-block">Loading...</h5>
+        </div>
+      </>
+    );
   } else {
     return (
       <Route

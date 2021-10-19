@@ -1,22 +1,27 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "./ServiceCart.css";
 
-const ServiceCard = () => {
+const ServiceCard = (props) => {
+  console.log(props);
+  const { service_id, service_img, service_name, service_datils } = props.data;
   return (
     <Card className="text-center ">
       <Card.Img
         variant="top"
-        src="http://atriumhealthcare.com/images/bannerimg.png"
+        src={service_img}
         className="img-fluid"
         style={{ height: "200px", objectFit: "cover" }}
       />
       <Card.Body>
         <Card.Title>
-          <h6 className="py-2 ">Primary Health Care </h6>
+          <h6 className="py-2 ">{service_name}</h6>
         </Card.Title>
-        <Card.Text>Some quick example text to build on the card</Card.Text>
-        <button className=" btn btn-primary px-3">View Details</button>
+        <Card.Text>{service_datils.slice(0, 60)}</Card.Text>
+        <Link to={`/service/${service_id}`}>
+          <button className=" btn btn-primary px-3">View Details</button>
+        </Link>
       </Card.Body>
     </Card>
   );

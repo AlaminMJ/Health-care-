@@ -1,16 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
 import "./LogIn.css";
 
 const LogIn = () => {
-  const { logInWithGoogle } = useAuth();
+  const { logInWithGoogle, logInWithEmail } = useAuth();
+  const [error, setError] = useState("");
   const location = useLocation();
   const history = useHistory();
   const handelGoogleLogin = () => {
     logInWithGoogle().then(() => {
-      if (location.state) {
-        history.push(location.state);
+      if (location.state?.from) {
+        history.push(location?.state?.from);
+      } else {
+        history.push("/");
+      }
+    });
+  };
+
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    const { email, password } = data;
+    logInWithEmail(email, password).then(() => {
+      if (location.state?.from) {
+        history.push(location?.state?.from);
       } else {
         history.push("/");
       }
@@ -26,12 +41,7 @@ const LogIn = () => {
             alt=" log img"
           />
         </div>
-        <form
-          className="py-2 px-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
+        <form className="py-2 px-4" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-center mt-3">Log In</h2>
           <div className="log_in_with_social">
             <button className="btn btn-primary px-4">Facebook</button>
@@ -40,33 +50,40 @@ const LogIn = () => {
             </button>
           </div>
           <p className="text-center">or</p>
-          <form>
-            <div className="mb-3">
-              <label htmlFor="exampleInputEmail1" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                className="form-control"
-                id="exampleInputEmail1"
-                aria-describedby="emailHelp"
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
-              </label>
-              <input
-                type="password"
-                className="form-control"
-                id="exampleInputPassword1"
-              />
-            </div>
 
-            <button type="submit" className="btn btn-primary">
-              Log In
-            </button>
-          </form>
+          <div className="mb-3">
+            <label htmlFor="email" className="form-label">
+              Email
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="email"
+              {...register("email", {
+                required: { value: true, message: "Email is Requared" },
+              })}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="password" className="form-label">
+              Password
+            </label>
+            <input
+              type="password"
+              className="form-control"
+              id="password"
+              {...register("password", {
+                required: true,
+                minLength: { value: 6, message: "Password must 8 degite" },
+              })}
+            />
+          </div>
+          <p className="text-danger">{error ? error : " "}</p>
+
+          <button type="submit" className="btn btn-primary">
+            Log In
+          </button>
+
           <h6 className="text-center my-3">
             Not member ?
             <span className="text-primary">
