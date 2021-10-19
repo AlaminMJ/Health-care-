@@ -8,6 +8,16 @@
   min-height: 70vh;
   background-position-y: -10px;
 }
+.banner.about-banner {
+  background-image: url("https://oilytheme.net/demo-html/2021/003/hounlare/assets/img/background/bg-17.jpg");
+  width: 100%;
+  padding: 70px 0;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 50vh;
+
+}
 .banner h2 {
   font-size: 60px;
   line-height: 72px;
@@ -78,7 +88,7 @@
 
 .services-row {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 .service {

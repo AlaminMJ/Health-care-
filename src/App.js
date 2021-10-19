@@ -8,8 +8,17 @@ import Header from "./components/Shared/Header/Header";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import NotFoundPage from "./components/Page/NotFound/NotFound";
 import Footer from "./components/Shared/Footer/Footer";
+import { useEffect, useState } from "react";
+import Contact from "./components/Page/Contact/Contact";
+import About from "./components/Page/About/About";
 
 function App() {
+  const [services, setSerices] = useState([]);
+  useEffect(() => {
+    fetch("./data.json")
+      .then((response) => response.json())
+      .then((data) => setSerices(data));
+  }, []);
   return (
     <AuthContext>
       <div className="App">
@@ -20,7 +29,7 @@ function App() {
               <Home></Home>
             </Route>
             <Route path="/home">
-              <Home></Home>
+              <Home services={services}></Home>
             </Route>
 
             <Route path="/login">
@@ -28,6 +37,12 @@ function App() {
             </Route>
             <Route path="/signup">
               <SignUp></SignUp>
+            </Route>
+            <Route path="/contact">
+              <Contact />
+            </Route>
+            <Route path="/about">
+              <About />
             </Route>
             <PrivateRoute path="/service/:id">
               <Service></Service>

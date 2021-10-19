@@ -5,31 +5,55 @@ import useAuth from "../../Hooks/useAuth";
 import "./LogIn.css";
 
 const LogIn = () => {
-  const { logInWithGoogle, logInWithEmail } = useAuth();
+  const { logInWithGoogle, logInWithEmail, logInWithFacebook } = useAuth();
   const [error, setError] = useState("");
   const location = useLocation();
   const history = useHistory();
   const handelGoogleLogin = () => {
-    logInWithGoogle().then(() => {
-      if (location.state?.from) {
-        history.push(location?.state?.from);
-      } else {
-        history.push("/");
-      }
-    });
+    logInWithGoogle()
+      .then(() => {
+        if (location.state?.from) {
+          history.push(location?.state?.from);
+        } else {
+          history.push("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.message);
+      });
+  };
+  const handelFacebookLogin = () => {
+    logInWithFacebook()
+      .then(() => {
+        if (location.state?.from) {
+          history.push(location?.state?.from);
+        } else {
+          history.push("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.message);
+      });
   };
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     console.log(data);
     const { email, password } = data;
-    logInWithEmail(email, password).then(() => {
-      if (location.state?.from) {
-        history.push(location?.state?.from);
-      } else {
-        history.push("/");
-      }
-    });
+    logInWithEmail(email, password)
+      .then(() => {
+        if (location.state?.from) {
+          history.push(location?.state?.from);
+        } else {
+          history.push("/");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setError(error.message);
+      });
   };
 
   return (
@@ -44,7 +68,12 @@ const LogIn = () => {
         <form className="py-2 px-4" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="text-center mt-3">Log In</h2>
           <div className="log_in_with_social">
-            <button className="btn btn-primary px-4">Facebook</button>
+            <button
+              className="btn btn-primary px-4"
+              onClick={handelFacebookLogin}
+            >
+              Facebook
+            </button>
             <button className="btn btn-danger px-4" onClick={handelGoogleLogin}>
               Google
             </button>

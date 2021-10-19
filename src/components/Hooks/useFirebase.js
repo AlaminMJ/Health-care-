@@ -2,6 +2,7 @@ import {
   getAuth,
   signInWithPopup,
   GoogleAuthProvider,
+  FacebookAuthProvider,
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
@@ -17,6 +18,7 @@ const useFirebase = () => {
   const [isLoading, setIsLoading] = useState(true);
   const auth = getAuth();
   const googleProvider = new GoogleAuthProvider();
+  const facebookProvider = new FacebookAuthProvider();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -30,6 +32,9 @@ const useFirebase = () => {
   }, [auth]);
   const logInWithGoogle = () => {
     return signInWithPopup(auth, googleProvider);
+  };
+  const logInWithFacebook = () => {
+    return signInWithPopup(auth, facebookProvider);
   };
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -69,6 +74,7 @@ const useFirebase = () => {
     logOut,
     logInWithEmail,
     logInWithGoogle,
+    logInWithFacebook,
     isLoading,
     createUser,
     error,
